@@ -1,131 +1,58 @@
- export default {
- 	"width": 250,
- 	"height": 275,
- 	"diameter": 20,
- 	"tokens": [{
- 			"x": 135,
- 			"y": 196,
- 			"text": "1"
- 		},
- 		{
- 			"x": 102,
- 			"y": 227,
- 			"text": "2"
- 		},
- 		{
- 			"x": 156,
- 			"y": 229,
- 			"text": "3"
- 		},
- 		{
- 			"x": 160,
- 			"y": 104,
- 			"text": "4"
- 		},
- 		{
- 			"x": 100,
- 			"y": 135,
- 			"text": "5"
- 		},
- 		{
- 			"x": 128,
- 			"y": 162,
- 			"text": "6"
- 		},
- 		{
- 			"x": 89,
- 			"y": 179,
- 			"text": "7"
- 		},
- 		{
- 			"x": 40,
- 			"y": 224,
- 			"text": "8"
- 		},
- 		{
- 			"x": 51,
- 			"y": 249,
- 			"text": "9"
- 		},
- 		{
- 			"x": 75,
- 			"y": 224,
- 			"text": "10"
- 		},
- 		/*{
- 			"x": 99,
- 			"y": 257,
- 			"text": "11"
- 		},
- 		{
- 			"x": 15,
- 			"y": 259,
- 			"text": "12"
- 		},
- 		{
- 			"x": 29,
- 			"y": 145,
- 			"text": "13"
- 		},
- 		{
- 			"x": 11,
- 			"y": 169,
- 			"text": "14"
- 		},
- 		{
- 			"x": 12,
- 			"y": 34,
- 			"text": "15"
- 		},
- 		{
- 			"x": 33,
- 			"y": 80,
- 			"text": "16"
- 		},
- 		{
- 			"x": 72,
- 			"y": 16,
- 			"text": "17"
- 		},
- 		{
- 			"x": 86,
- 			"y": 79,
- 			"text": "18"
- 		},
- 		{
- 			"x": 139,
- 			"y": 59,
- 			"text": "19"
- 		},
- 		{
- 			"x": 100,
- 			"y": 55,
- 			"text": "20"
- 		},
- 		{
- 			"x": 114,
- 			"y": 14,
- 			"text": "21"
- 		},
- 		{
- 			"x": 198,
- 			"y": 42,
- 			"text": "22"
- 		},
- 		{
- 			"x": 205,
- 			"y": 250,
- 			"text": "23"
- 		},
- 		{
- 			"x": 180,
- 			"y": 142,
- 			"text": "24"
- 		},
- 		{
- 			"x": 173,
- 			"y": 257,
- 			"text": "25"
- 		}*/
- 	]
- };
+const d = 44; //diameter
+
+function tokens() {
+  const xlowest = 50;
+  const xhighest = 710;
+  const ylowest = 50;
+  const yhighest = 510;
+  const d2 = d + 10;
+
+  let tokens = [];
+  let xrange = [];
+  let yrange = [];
+
+  for (let i = 0; i < 25; i++) {
+    const x = Math.round(xlowest + Math.random() * (xhighest - xlowest));
+    xrange.push(x);
+  }
+
+  let i = 0;
+  while (i < 25) {
+    const y = Math.round(ylowest + Math.random() * (yhighest - ylowest));
+
+    const ycheck = yrange.every((yr, index) => {
+      if (!(y + d2 - yr < 0 || yr + d2 - y < 0)) {
+        return (
+          xrange[i] + d2 - xrange[index] < 0 ||
+          xrange[index] + d2 - xrange[i] < 0
+        );
+      }
+
+      return true;
+    });
+
+    if (ycheck) {
+      yrange.push(y);
+      i++;
+    }
+  }
+
+  for (let k = 0; k < 25; k++) {
+    tokens.push({
+      x: xrange[k],
+      y: yrange[k],
+      text: "" + (k + 1),
+    });
+  }
+  //console.log(tokens);
+  return tokens;
+}
+
+export default function obj() {
+  return {
+    width: 758,
+    height: 558,
+    diameter: d,
+    tokens: tokens(),
+  };
+}
