@@ -57,7 +57,7 @@ export default class Trails extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.setState({ trail: TrailsA12() });
+    this.setState({ trail: TrailsA() });
   }
 
   handleSuccess = (e, index) => {
@@ -127,7 +127,7 @@ export default class Trails extends React.PureComponent {
       case TrailTypes.A:
         return TrailsA;
       case TrailTypes.ASample:
-        return TrailsASample;
+        return this.state.trail;
       case TrailTypes.B:
         return TrailsB;
       case TrailTypes.BSample:
